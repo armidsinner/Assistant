@@ -1,4 +1,3 @@
-import os
 import time
 import speech_recognition as sr
 from fuzzywuzzy import fuzz
@@ -89,7 +88,7 @@ def execute_cmd(cmd):
 
     else:
         print('Команда не распознана, повторите!')
-
+    speak_engine.endLoop()
 
 # запуск
 r = sr.Recognizer()
@@ -98,14 +97,26 @@ m = sr.Microphone()
 with m as source:
     r.adjust_for_ambient_noise(source)
 
+
 speak_engine = pyttsx3.init()
 
+voices = speak_engine.getProperty('voices')
+
+
+# voices = engine.getProperty('voices')
+# for voice in voices:
+#     print("Voice:")
+#     print(" - ID: %s" % voice.id)
+#     print(" - Name: %s" % voice.name)
+#     print(" - Languages: %s" % voice.languages)
+#     print(" - Gender: %s" % voice.gender)
+#     print(" - Age: %s" % voice.age)
 
 voices = speak_engine.getProperty('voices')
-speak_engine.setProperty('voice', voices[0].id)
+speak_engine.setProperty('voice', 'com.apple.speech.synthesis.voice.yuri')
 
 
-speak("Да, дорогой")
+speak("Че тебе надо?")
 
 stop_listening = r.listen_in_background(m, callback)
 while True:
